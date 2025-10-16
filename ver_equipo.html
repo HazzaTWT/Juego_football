@@ -1,0 +1,449 @@
+{% extends "base.html" %}
+
+{% block title %}{{ nombre }} - Alineación{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #1b5e20 !important;
+        color: white;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .contenedor-principal {
+        width: 100%;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+    }
+    .cancha {
+        position: relative;
+        width: 100%;
+        max-width: 1000px;
+        height: 600px;
+        margin: 20px auto;
+        background: linear-gradient(#43a047, #2e7d32);
+        border-radius: 15px;
+        box-shadow: 0 0 15px black;
+        overflow: hidden;
+    }
+    .posicion {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        width: 80px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        padding: 5px;
+        border-radius: 10px;
+        z-index: 100;
+    }
+    .posicion:hover {
+        border-color: yellow;
+        background-color: rgba(255, 255, 0, 0.2);
+    }
+    .posicion img {
+        width: 50px;
+        height: 50px;
+        filter: drop-shadow(0 0 4px black);
+    }
+    .posicion span {
+        display: block;
+        font-size: 11px;
+        font-weight: bold;
+        text-shadow: 1px 1px 3px black;
+        color: #fff;
+        margin-top: 4px;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 3px;
+        border-radius: 5px;
+    }
+    .banco {
+        margin-top: 30px;
+        background-color: #154c20;
+        border-radius: 10px;
+        padding: 20px;
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    ul { 
+        list-style: none; 
+        padding: 0; 
+        margin: 0; 
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    li { 
+        padding: 10px 15px;
+        background-color: #2e7d32;
+        border-radius: 8px;
+        margin: 5px;
+        min-width: 200px;
+    }
+    .volver {
+        display: inline-block;
+        margin-top: 20px;
+        background-color: #43a047;
+        color: white;
+        text-decoration: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        margin: 10px;
+        font-size: 16px;
+    }
+    select, button {
+        padding: 10px 15px;
+        border-radius: 8px;
+        border: none;
+        margin: 8px;
+        font-size: 16px;
+    }
+    .info-equipo {
+        background-color: #2e7d32;
+        padding: 15px;
+        border-radius: 10px;
+        margin: 20px auto;
+        max-width: 600px;
+        border: 2px solid #43a047;
+    }
+    .formacion-selector {
+        background-color: #2e7d32;
+        padding: 15px;
+        border-radius: 10px;
+        margin: 20px auto;
+        max-width: 500px;
+        border: 2px solid #43a047;
+    }
+    
+    /* Modal */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+    }
+    .modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #1b5e20;
+        padding: 25px;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 500px;
+        max-height: 80vh;
+        overflow-y: auto;
+        border: 3px solid #43a047;
+        z-index: 1001;
+    }
+    .jugador-option {
+        background-color: #2e7d32;
+        margin: 12px 0;
+        padding: 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 1px solid #43a047;
+    }
+    .jugador-option:hover {
+        background-color: #43a047;
+        transform: scale(1.02);
+    }
+    .close {
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        color: white;
+        margin-top: -10px;
+    }
+    .modal-title {
+        text-align: center;
+        margin-bottom: 20px;
+        color: yellow;
+        font-size: 24px;
+    }
+    .jugador-incompatible {
+        background-color: #7f1d1d !important;
+        opacity: 0.6;
+        cursor: not-allowed !important;
+    }
+    .jugador-incompatible:hover {
+        background-color: #7f1d1d !important;
+        transform: none !important;
+    }
+    
+    /* Títulos */
+    h2 {
+        color: white;
+        margin-bottom: 20px;
+        font-size: 28px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    h3 {
+        color: white;
+        margin-bottom: 15px;
+        font-size: 22px;
+    }
+</style>
+
+<div class="contenedor-principal">
+    <h2>{{ nombre }} - Formación: {{ equipo.formacion }}</h2>
+
+    <div class="info-equipo">
+        <p>💰 Dinero disponible: ${{ equipo.dinero|format_number }} | 👥 Jugadores: {{ equipo.jugadores|length }}/25</p>
+    </div>
+
+    <div class="formacion-selector">
+        <form action="{{ url_for('guardar_formacion', nombre=nombre) }}" method="POST">
+            <label><strong>Elegir formación:</strong></label>
+            <select name="formacion">
+                {% for f in formaciones %}
+                    <option value="{{ f }}" {% if f == equipo.formacion %}selected{% endif %}>{{ f }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">🔄 Actualizar formación</button>
+        </form>
+    </div>
+
+    <div class="cancha">
+        {% for j in titulares %}
+            <div class="posicion" 
+                 style="top: {{ j.top }}px; left: {{ j.left }}%;"
+                 onclick="abrirModal('{{ j.posicion_actual }}')">
+                <img src="https://cdn-icons-png.flaticon.com/512/3342/3342137.png" alt="jugador">
+                <span>
+                    {% if j.vacio %}
+                        🔘 {{ j.nombre }}
+                    {% else %}
+                        ⚽ {{ j.nombre }}
+                    {% endif %}
+                </span>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Modal -->
+    <div id="modalJugadores" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <h3 class="modal-title" id="modalTitulo">Seleccionar jugador</h3>
+            <div id="listaJugadores"></div>
+        </div>
+    </div>
+
+    <div class="banco">
+        <h3>🏆 Banco de Suplentes ({{ suplentes|length }} jugadores):</h3>
+        {% if suplentes %}
+            <ul>
+                {% for s in suplentes %}
+                    <li>{{ s.nombre }} - {{ s.posicion }} ({{ s.equipo }})<br>💵 ${{ s.valor|format_number }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No tienes suplentes todavía.</p>
+        {% endif %}
+    </div>
+
+    <div>
+        <a href="/mercado" class="volver">🛒 Ir al Mercado</a>
+        <a href="/" class="volver">🏠 Volver al inicio</a>
+    </div>
+</div>
+
+<script>
+// Variable global para la posición seleccionada
+let posicionActual = '';
+
+// SISTEMA CORREGIDO DE COMPATIBILIDAD
+const compatibilidadPosiciones = {
+    'Portero': ['Portero'],
+    'Defensa': ['LD', 'DFC1', 'DFC2', 'LI'],
+    'Centrocampista': ['MC1', 'MC2', 'MC3', 'MC4', 'MCD', 'MCD1', 'MCD2', 'MCA'],
+    'Extremo': ['ED', 'EI'],
+    'Delantero': ['DC', 'DC1', 'DC2', 'ED', 'EI']  // Delanteros SÍ pueden jugar como extremos
+};
+
+// Mapeo de posiciones del campo a roles
+const posicionARol = {
+    'Portero': 'Portero',
+    'LD': 'Defensa', 'DFC1': 'Defensa', 'DFC2': 'Defensa', 'LI': 'Defensa',
+    'MC1': 'Centrocampista', 'MC2': 'Centrocampista', 'MC3': 'Centrocampista', 
+    'MC4': 'Centrocampista', 'MCD': 'Centrocampista', 'MCD1': 'Centrocampista', 
+    'MCD2': 'Centrocampista', 'MCA': 'Centrocampista',
+    'ED': 'Extremo', 'EI': 'Extremo',
+    'DC': 'Delantero', 'DC1': 'Delantero', 'DC2': 'Delantero'
+};
+
+function esJugadorCompatible(posicionJugador, posicionDeseada) {
+    console.log(`Verificando compatibilidad: ${posicionJugador} -> ${posicionDeseada}`);
+    
+    const rolJugador = posicionJugador;
+    const posicionesCompatibles = compatibilidadPosiciones[rolJugador];
+    
+    if (!posicionesCompatibles) {
+        console.log(`Rol ${rolJugador} no encontrado en compatibilidad`);
+        return false;
+    }
+    
+    const esCompatible = posicionesCompatibles.includes(posicionDeseada);
+    console.log(`Resultado: ${esCompatible}`);
+    
+    return esCompatible;
+}
+
+function abrirModal(posicion) {
+    console.log('Clic en posición:', posicion);
+    posicionActual = posicion;
+    document.getElementById('modalTitulo').textContent = 'Seleccionar jugador para: ' + posicion;
+    
+    const listaJugadores = document.getElementById('listaJugadores');
+    listaJugadores.innerHTML = '';
+    
+    // Opción para dejar vacante
+    const opcionVacante = document.createElement('div');
+    opcionVacante.className = 'jugador-option';
+    opcionVacante.innerHTML = '<strong>🔄 DEJAR POSICIÓN VACANTE</strong>';
+    opcionVacante.onclick = function() {
+        console.log('Seleccionado: DEJAR VACANTE');
+        asignarJugador('VACIO');
+    };
+    listaJugadores.appendChild(opcionVacante);
+    
+    // Mostrar jugadores con indicación de compatibilidad
+    let jugadoresCompatibles = 0;
+    
+    {% for jugador in equipo.jugadores %}
+        const jugadorDiv = document.createElement('div');
+        const esCompatible = esJugadorCompatible('{{ jugador.posicion }}', posicion);
+        
+        if (esCompatible) {
+            jugadorDiv.className = 'jugador-option';
+            jugadoresCompatibles++;
+        } else {
+            jugadorDiv.className = 'jugador-option jugador-incompatible';
+        }
+        
+        // Verificar si el jugador está en esta posición actualmente
+        const enEstaPosicion = '{{ jugador.posicion_actual }}' === posicion;
+        const enOtraPosicion = '{{ jugador.posicion_actual }}' && '{{ jugador.posicion_actual }}' !== posicion;
+        
+        let estado = '';
+        if (enEstaPosicion) {
+            estado = ' ✅ <em>(Actual)</em>';
+        } else if (enOtraPosicion) {
+            estado = ` ⚠️ <em>(En: {{ jugador.posicion_actual }})</em>`;
+        }
+        
+        let iconoCompatibilidad = esCompatible ? '✅' : '❌';
+        
+        jugadorDiv.innerHTML = `
+            <strong>{{ jugador.nombre }}</strong> ${iconoCompatibilidad}<br>
+            📍 {{ jugador.posicion }} | 🏁 {{ jugador.equipo }}<br>
+            💵 ${{ jugador.valor|format_number }}${estado}
+            ${!esCompatible ? '<br><small><em>No compatible con esta posición</em></small>' : ''}
+        `;
+        
+        if (esCompatible) {
+            jugadorDiv.onclick = function() {
+                console.log('Seleccionado jugador:', '{{ jugador.nombre }}');
+                asignarJugador('{{ jugador.nombre }}');
+            };
+        } else {
+            jugadorDiv.onclick = function() {
+                alert('❌ {{ jugador.nombre }} no puede jugar como ' + posicion + '\n\n{{ jugador.nombre }} es {{ jugador.posicion }} y esta posición requiere ' + posicionARol[posicion]);
+            };
+        }
+        
+        listaJugadores.appendChild(jugadorDiv);
+    {% endfor %}
+    
+    // Si no hay jugadores compatibles, mostrar mensaje
+    if (jugadoresCompatibles === 0) {
+        const mensaje = document.createElement('div');
+        mensaje.innerHTML = '<p>❌ No tienes jugadores compatibles con esta posición</p>';
+        listaJugadores.appendChild(mensaje);
+    }
+    
+    document.getElementById('modalJugadores').style.display = 'block';
+}
+
+function asignarJugador(nombreJugador) {
+    console.log('Asignando jugador:', nombreJugador, 'a posición:', posicionActual);
+    
+    // Codificar los parámetros para URL
+    const jugadorCodificado = encodeURIComponent(nombreJugador);
+    const posicionCodificada = encodeURIComponent(posicionActual);
+    const equipoCodificado = encodeURIComponent('{{ nombre }}');
+    
+    const url = `/asignar_posicion/${equipoCodificado}/${jugadorCodificado}/${posicionCodificada}`;
+    
+    console.log('URL de la petición:', url);
+    
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => {
+        console.log('Respuesta recibida, status:', response.status);
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor: ' + response.status);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Datos recibidos:', data);
+        if (data.ok) {
+            console.log('Asignación exitosa, cerrando modal y recargando...');
+            cerrarModal();
+            // Recargar la página para ver los cambios
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
+        } else {
+            console.error('Error del servidor:', data.error);
+            alert('Error: ' + (data.error || 'Error desconocido'));
+        }
+    })
+    .catch(error => {
+        console.error('Error en fetch:', error);
+        alert('Error al asignar jugador: ' + error.message);
+    });
+}
+
+function cerrarModal() {
+    document.getElementById('modalJugadores').style.display = 'none';
+    posicionActual = '';
+}
+
+// Cerrar modal al hacer clic fuera
+window.onclick = function(event) {
+    const modal = document.getElementById('modalJugadores');
+    if (event.target === modal) {
+        cerrarModal();
+    }
+}
+
+// Cerrar modal con ESC
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        cerrarModal();
+    }
+});
+
+console.log('JavaScript cargado correctamente');
+</script>
+{% endblock %}

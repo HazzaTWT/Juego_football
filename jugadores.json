@@ -1,0 +1,221 @@
+{
+  "Premier League": [
+    {
+      "nombre": "Erling Haaland",
+      "club": "Manchester City",
+      "valor": 180000000,
+      "posicion": "Delantero",
+      "edad": 23,
+      "altura": 1.94,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/418560-1667253185.jpg"
+    },
+    {
+      "nombre": "Bukayo Saka",
+      "club": "Arsenal",
+      "valor": 150000000,
+      "posicion": "Extremo",
+      "edad": 21,
+      "altura": 1.78,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/507331-1667253185.jpg"
+    },
+    {
+      "nombre": "Phil Foden",
+      "club": "Manchester City",
+      "valor": 120000000,
+      "posicion": "Centrocampista",
+      "edad": 23,
+      "altura": 1.71,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/418460-1667253185.jpg"
+    },
+    {
+      "nombre": "Declan Rice",
+      "club": "Arsenal",
+      "valor": 110000000,
+      "posicion": "Centrocampista",
+      "edad": 25,
+      "altura": 1.85,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/377633-1667253185.jpg"
+    },
+    {
+      "nombre": "Martin Ødegaard",
+      "club": "Arsenal",
+      "valor": 100000000,
+      "posicion": "Centrocampista",
+      "edad": 25,
+      "altura": 1.78,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/348207-1667253185.jpg"
+    }
+  ],
+  "La Liga": [
+    {
+      "nombre": "Lamine Yamal",
+      "club": "FC Barcelona",
+      "valor": 200000000,
+      "posicion": "Delantero",
+      "edad": 17,
+      "altura": 1.70,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/838875-1667253185.jpg"
+    },
+    {
+      "nombre": "Jude Bellingham",
+      "club": "Real Madrid",
+      "valor": 180000000,
+      "posicion": "Centrocampista",
+      "edad": 20,
+      "altura": 1.86,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/437156-1667253185.jpg"
+    },
+    {
+      "nombre": "Vinícius Júnior",
+      "club": "Real Madrid",
+      "valor": 170000000,
+      "posicion": "Extremo",
+      "edad": 23,
+      "altura": 1.76,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/365725-1667253185.jpg"
+    },
+    {
+      "nombre": "Rodrygo",
+      "club": "Real Madrid",
+      "valor": 140000000,
+      "posicion": "Extremo",
+      "edad": 22,
+      "altura": 1.74,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/388897-1667253185.jpg"
+    },
+    {
+      "nombre": "Pedri",
+      "club": "FC Barcelona",
+      "valor": 130000000,
+      "posicion": "Centrocampista",
+      "edad": 21,
+      "altura": 1.74,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/534254-1667253185.jpg"
+    }
+  ],
+  "Serie A": [
+    {
+      "nombre": "Khvicha Kvaratskhelia",
+      "club": "Napoli",
+      "valor": 90000000,
+      "posicion": "Extremo",
+      "edad": 22,
+      "altura": 1.78,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/507025-1667253185.jpg"
+    },
+    {
+      "nombre": "Giovanni Simeone",
+      "club": "Napoli",
+      "valor": 60000000,
+      "posicion": "Delantero",
+      "edad": 26,
+      "altura": 1.79,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/249853-1667253185.jpg"
+    },
+    {
+      "nombre": "Federico Dimarco",
+      "club": "Inter de Milán",
+      "valor": 50000000,
+      "posicion": "Defensa",
+      "edad": 25,
+      "altura": 1.82,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/233110-1667253185.jpg"
+    },
+    {
+      "nombre": "Bremer",
+      "club": "Juventus",
+      "valor": 50000000,
+      "posicion": "Defensa",
+      "edad": 26,
+      "altura": 1.87,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/360374-1667253185.jpg"
+    },
+    {
+      "nombre": "Moise Kean",
+      "club": "Juventus",
+      "valor": 40000000,
+      "posicion": "Delantero",
+      "edad": 23,
+      "altura": 1.83,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/383150-1667253185.jpg"
+    }
+  ],
+  "Ligue 1": [
+    {
+      "nombre": "Désiré Doué",
+      "club": "Paris Saint-Germain",
+      "valor": 90000000,
+      "posicion": "Centrocampista",
+      "edad": 19,
+      "altura": 1.75,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/735092-1667253185.jpg"
+    },
+    {
+      "nombre": "Ousmane Dembélé",
+      "club": "Paris Saint-Germain",
+      "valor": 90000000,
+      "posicion": "Extremo",
+      "edad": 26,
+      "altura": 1.78,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/283626-1667253185.jpg"
+    },
+    {
+      "nombre": "Khvicha Kvaratskhelia",
+      "club": "Paris Saint-Germain",
+      "valor": 90000000,
+      "posicion": "Extremo",
+      "edad": 22,
+      "altura": 1.78,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/507025-1667253185.jpg"
+    },
+    {
+      "nombre": "João Neves",
+      "club": "Paris Saint-Germain",
+      "valor": 80000000,
+      "posicion": "Centrocampista",
+      "edad": 20,
+      "altura": 1.82,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/510562-1667253185.jpg"
+    },
+    {
+      "nombre": "Vitinha",
+      "club": "Paris Saint-Germain",
+      "valor": 80000000,
+      "posicion": "Centrocampista",
+      "edad": 23,
+      "altura": 1.74,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/459064-1667253185.jpg"
+    }
+  ],
+  "Bundesliga": [
+    {
+      "nombre": "Jamal Musiala",
+      "club": "Bayern Múnich",
+      "valor": 140000000,
+      "posicion": "Centrocampista",
+      "edad": 20,
+      "altura": 1.79,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/519287-1667253185.jpg"
+    },
+    {
+      "nombre": "Michael Olise",
+      "club": "Bayern Múnich",
+      "valor": 130000000,
+      "posicion": "Centrocampista",
+      "edad": 21,
+      "altura": 1.83,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/509753-1667253185.jpg"
+    },
+    {
+      "nombre": "Harry Kane",
+      "club": "Bayern Múnich",
+      "valor": 75000000,
+      "posicion": "Delantero",
+      "edad": 30,
+      "altura": 1.88,
+      "imagen": "https://tmssl.akamaized.net/images/portrait/header/132404-1667253185.jpg"
+    },
+    {
+      "nombre": "Joshua Kimmich",
+      "club": "Bayern Múnich",
+      "valor": 70000000

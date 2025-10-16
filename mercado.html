@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}💼Mercado de Fichajes{% endblock %}
+
+{% block content %}
+<h2>💼 Mercado de Fichajes</h2>
+
+<p>💰 Presupuesto: $<span id="dinero">{{ "{:,}".format(dinero) }}</span></p>
+
+{% for liga, jugadores in ligas.items() %}
+    <h3>{{ liga }}</h3>
+    <div class="row">
+    {% for jugador in jugadores %}
+        <div class="col-md-4 mb-3">
+            <div class="card p-2" style="background: #1a1a1a; border: 1px solid #444;">
+                <img src="{{ jugador.imagen }}" alt="{{ jugador.nombre }}" class="card-img-top mb-2" style="height: 200px; object-fit: cover;">
+                <h5 style="color: #e6edf3;">{{ jugador.nombre }}</h5>
+                <p style="color: #ccc; margin-bottom: 5px;">{{ jugador.club }} - €{{ "{:,}".format(jugador.valor) }}</p>
+                <p style="color: #ccc; margin-bottom: 5px;">Posición: {{ jugador.posicion }}</p>
+                <p style="color: #ccc; margin-bottom: 15px;">Edad: {{ jugador.edad }} | Altura: {{ jugador.altura }}m</p>
+                <button class="btn btn-success btn-sm fichar-btn"
+                        data-liga="{{ liga }}" 
+                        data-jugador="{{ jugador.nombre }}"
+                        style="width: 100%;">
+                    Fichar
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endfor %}
+
+<a href="{{ url_for('ver_equipo', nombre=session.get('equipo')) }}" class="btn btn-secondary mt-3">Volver al Equipo</a>
+<a href="{{ url_for('inicio') }}" class="btn btn-secondary mt-1">Volver al Inicio</a>
+
+<script>
+document.querySelectorAll('.fichar-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const liga = this.getAttribute('data-liga');
+        const jugador = this.getAttribute('data-jugador');
+        const button = this;
+
+        // Deshabilitar el botón temporalmente para evitar múltiples clicks
+        button.disabled = true;
+        button.textContent = 'Fichando...';
+        button.style.background = '#6c757d';
+
+        fetch(`/fichar_ajax/${encodeURIComponent(liga)}/${encodeURIComponent(jugador)}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.error) {
+                alert('❌ ' + data.error);
+            } else if (data.success) {
+                // Actualizar el dinero mostrado
+                document.getElementById('dinero').textContent = data.dinero.toLocaleString();
+                alert('✅ ' + data.mensaje);
+                // Opcional: remover la tarjeta del jugador fichado
+                // button.closest('.col-md-4').remove();
+            } else {
+                alert('❌ Respuesta inesperada del servidor');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('❌ Error de conexión al intentar fichar');
+        })
+        .finally(() => {
+            // Rehabilitar el botón después de 2 segundos
+            setTimeout(() => {
+                button.disabled = false;
+                button.textContent = 'Fichar';
+                button.style.background = '';
+            }, 2000);
+        });
+    });
+});
+</script>
+{% endblock %}

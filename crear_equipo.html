@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Crear Equipo{% endblock %}
+
+{% block content %}
+<h2>Crear tu Equipo</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre del Equipo</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej: Tigres FC" required>
+    </div>
+    <button type="submit" class="btn btn-success">Crear Equipo</button>
+</form>
+<a href="{{ url_for('inicio') }}" class="btn btn-secondary mt-3">Volver</a>
+{% endblock %}
